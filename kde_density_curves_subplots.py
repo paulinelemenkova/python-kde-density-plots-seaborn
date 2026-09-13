@@ -1,41 +1,53 @@
 #!/usr/bin/env python
 # coding: utf-8
-import os
-import pandas as pd
-import matplotlib.pylab as pylab
-from matplotlib import pyplot as plt
-import matplotlib.artist as martist
-from matplotlib.offsetbox import AnchoredText
-import seaborn as sns
+"""Kernel Density (KDE) Curves with Python and Seaborn
 
-os.chdir('/Users/pauline/Documents/Python')
+Author:  Polina Lemenkova
+ORCID:   https://orcid.org/0000-0002-5759-1089
+Archive: https://doi.org/10.13140/RG.2.2.24642.22725
+License: MIT
+
+See README.md for details.
+"""
+import os
+
+import matplotlib.artist as martist
+import matplotlib.pylab as pylab
+import pandas as pd
+import seaborn as sns
+from matplotlib import pyplot as plt
+from matplotlib.offsetbox import AnchoredText
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 df = pd.read_csv("Tab-Bathy.csv")
 dfM = pd.read_csv("Tab-Morph.csv")
 sns.set_style('darkgrid')
 sns.set_context('paper')
 
 params = {'figure.figsize': (10, 6),
-    'figure.dpi': 300,
-        'figure.titlesize': 14,
-            'font.family': 'Palatino',
-                'axes.labelsize': 10,
-                    'legend.fontsize': 8,
-                        'legend.loc': 'best',
-                            'xtick.labelsize': 8,
-                                'ytick.labelsize': 8,
-                                    'axes.labelpad':2,
-                                    }
+          'figure.dpi': 300,
+          'figure.titlesize': 14,
+          'font.family': 'Palatino',
+          'axes.labelsize': 10,
+          'legend.fontsize': 8,
+          'legend.loc': 'best',
+          'xtick.labelsize': 8,
+          'ytick.labelsize': 8,
+          'axes.labelpad': 2,
+          }
 pylab.rcParams.update(params)
 
 fig = plt.figure(figsize=(10.0, 6.0), dpi=300)
 fig.suptitle('Kernel Density Esimation: probability of the depth ranges, Mariana Trench',
              x=0.5, y=0.97)
 
+
 def add_at(ax, t, loc=1):
     fp = dict(size=11)
     _at = AnchoredText(t, loc=loc, prop=fp)
     ax.add_artist(_at)
     return _at
+
 
 # subplot 1
 ax = fig.add_subplot(231)
@@ -45,7 +57,7 @@ ax = sns.kdeplot(df['profile3'], shade=True, color="b")
 ax = sns.kdeplot(df['profile4'], shade=True, color="#e95295")
 ax = sns.kdeplot(df['profile5'], shade=True, color="#00a3af")
 ax.set(xlabel='Depths, m', ylabel='KDE')
-ax.set_title ("profiles 1-5", fontsize=9, fontfamily='serif')
+ax.set_title("profiles 1-5", fontsize=9, fontfamily='serif')
 add_at(ax, "A", loc=2)
 
 # subplot 2
